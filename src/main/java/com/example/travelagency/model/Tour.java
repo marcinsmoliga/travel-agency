@@ -17,22 +17,22 @@ public class Tour {
 		AFRICA, ASIA, EUROPE, NORTH_AMERICA, SOUTH_AMERICA;
 	}
 
-	@NotBlank(message = "Tour name cannot be empty")
-	@Size(min = 5, message = "Tour name should have at least 5 characters")
+	@NotBlank(message = "{tour.name.notblank}")
+	@Size(min = 5, message = "{tour.name.size}")
 	private String name;
 
-	@Pattern(regexp = "^[a-zA-Z]{2}-[0-9]{2}[a-zA-Z]$", message = "Excepted format is LL-DDL (L-letter A-Z, D-digit 0-9)")
+	@Pattern(regexp = "^[a-zA-Z]{2}-[0-9]{2}[a-zA-Z]$", message = "{tour.code.pattern}")
 	private String code;
 
 	private Continent continent;
 
-	@NotNull(message = "Please select the date")
-	@Future(message = "Date should be from the future")
+	@NotNull(message = "{tour.date.notnull}")
+	@Future(message = "{tour.date.future}")
 	@DateTimeFormat(pattern = "yyy-MM-dd")
 	private Date date;
 
-	@Min(value = 7, message = "Must be between 7 and 21")
-	@Max(value = 21, message = "Must be between 7 and 21")
+	@Min(value = 7, message = "{tour.duration.minmax}")
+	@Max(value = 21, message = "{tour.duration.minmax}")
 	private int duration;
 
 	private boolean allInclusive = false;
