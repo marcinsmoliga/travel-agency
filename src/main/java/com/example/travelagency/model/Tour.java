@@ -2,10 +2,13 @@ package com.example.travelagency.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -45,6 +48,10 @@ public class Tour {
 	private int duration;
 
 	private boolean allInclusive = false;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "tour_details_id")
+	private TourDetails tourDetails;
 
 	public Tour() {
 	}
@@ -103,5 +110,13 @@ public class Tour {
 
 	public void setAllInclusive(boolean allInclusive) {
 		this.allInclusive = allInclusive;
+	}
+
+	public TourDetails getTourDetails() {
+		return tourDetails;
+	}
+
+	public void setTourDetails(TourDetails tourDetails) {
+		this.tourDetails = tourDetails;
 	}
 }

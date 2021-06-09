@@ -9,4 +9,5 @@ public interface TourService {
 	Tour getById(Long id);
 	void saveOrUpdate(Tour tour);
 	void delete(Long id);
+	void addTourDetailsIfNotExists(Tour tour);
 }

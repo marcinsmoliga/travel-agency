@@ -21,11 +21,6 @@ public class TourController {
 		this.tourService = tourService;
 	}
 
-	@GetMapping("/")
-	public String getHome() {
-		return "home";
-	}
-
 	@GetMapping("/addTour")
 	public String showForm(Model model) {
 		model.addAttribute("tour", new Tour());
