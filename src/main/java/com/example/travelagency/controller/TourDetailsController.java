@@ -37,7 +37,6 @@ public class TourDetailsController {
 	public String editTourDetails(@PathVariable Long tourId, Model model) {
 		Tour tour = tourService.getById(tourId);
 		if(tour != null) {
-			tourService.addTourDetailsIfNotExists(tour);
 			model.addAttribute("tourDetails", tour.getTourDetails());
 			return "form-tour-details";
 		}
