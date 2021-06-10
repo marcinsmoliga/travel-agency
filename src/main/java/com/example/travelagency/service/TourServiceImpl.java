@@ -1,5 +1,6 @@
 package com.example.travelagency.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -7,14 +8,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.travelagency.model.Tour;
 import com.example.travelagency.model.TourDetails;
+import com.example.travelagency.model.User;
 import com.example.travelagency.repository.TourRepository;
+import com.example.travelagency.repository.UserRepository;
+
 @Service
 @Transactional
 public class TourServiceImpl implements TourService {
 	private final TourRepository tourRepository;
+	private final UserRepository userRepository;
 
-	public TourServiceImpl(TourRepository tourRepository) {
+	public TourServiceImpl(TourRepository tourRepository,
+	                       UserRepository userRepository) {
 		this.tourRepository = tourRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -47,5 +54,19 @@ public class TourServiceImpl implements TourService {
 
 	public Tour getByIdWithComments(Long id) {
 		return tourRepository.getByIdWithComments(id);
+	}
+
+	@Override
+	public void addUserToTour(Long tourId, Long userId) {
+		Tour tour = getById(tourId);
+		if (tour.getUsers() == null) {
+			tour.setUsers(new ArrayList<>());
+		}
+
+		User user = userRepository.getById(userId);
+		if (user != null) {
+			tour.getUsers().add(user);
+			saveOrUpdate(tour);
+		}
 	}
 }
