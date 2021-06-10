@@ -44,4 +44,8 @@ public class TourServiceImpl implements TourService {
 		}
 		saveOrUpdate(tour);
 	}
+
+	public Tour getByIdWithComments(Long id) {
+		return tourRepository.getByIdWithComments(id);
+	}
 }

@@ -29,6 +29,19 @@
         <label>Tour description</label>
         <textarea class="form-control" rows="20" th:field="${tour.tourDetails.description}" readonly></textarea>
     </div>
+    <div class="row" th:if="${tour.comments.empty}">
+        <h2>There are no comments for this tour</h2>
+    </div>
+    <div class="row">
+        <div th:if="${!tour.comments.empty}">
+            <h2>Comment</h2>
+            <ul class="list-group" th:each="comment : ${tour.comments}">
+                <li class="list-group-item" th:text="${comment.content}"></li>
+            </ul>
+        </div>
+    </div>
+
+
     <div>
         <a th:href="@{/showOffer}" class="btn btn-warning">Back</a>
     </div>
