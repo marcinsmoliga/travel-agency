@@ -1,5 +1,6 @@
 package com.example.travelagency.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class Tour {
 
 	@NotNull(message = "{tour.date.notnull}")
 	@Future(message = "{tour.date.future}")
-	@DateTimeFormat(pattern = "yyy-MM-dd")
-	private Date date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate date;
 
 	@Min(value = 7, message = "{tour.duration.minmax}")
 	@Max(value = 21, message = "{tour.duration.minmax}")
@@ -62,7 +63,7 @@ public class Tour {
 
 	@ManyToMany
 	@JoinTable(joinColumns = @JoinColumn(name = "tour_id"),
-			   inverseJoinColumns = @JoinColumn(name = "user_id"))
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> users;
 
 	public Tour() {
@@ -101,11 +102,11 @@ public class Tour {
 		this.continent = continent;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

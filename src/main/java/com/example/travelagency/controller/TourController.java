@@ -1,5 +1,7 @@
 package com.example.travelagency.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -65,5 +67,13 @@ public class TourController {
 	public String addUserToTour(@PathVariable Long tourId, @PathVariable Long userId) {
 		tourService.addUserToTour(tourId, userId);
 		return "redirect:/showOffer";
+	}
+
+
+	@GetMapping("/showOfferForNextMonth")
+	public String getToursForNextMonth(Model model) {
+		List<Tour> tours = tourService.getAllForNextMonth();
+		model.addAttribute("tours", tours);
+		return "tours";
 	}
 }

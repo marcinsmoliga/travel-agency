@@ -1,6 +1,8 @@
 package com.example.travelagency.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -60,5 +62,12 @@ public class TourServiceImpl implements TourService {
 			tour.getUsers().add(user);
 			saveOrUpdate(tour);
 		}
+	}
+
+	@Override
+	public List<Tour> getAllForNextMonth() {
+		LocalDate currentDate = LocalDate.now();
+		LocalDate futureDate = currentDate.plusWeeks(4);
+		return tourRepository.findByDateBetween(currentDate, futureDate);
 	}
 }
