@@ -1,5 +1,8 @@
 package com.example.travelagency.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +16,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	private final DataSource dataSource;
+
+	public SecurityConfig(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder( ){
@@ -22,12 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-				.inMemoryAuthentication()
-				.withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN", "EMPLOYEE")
-				.and()
-				.withUser("employee").password(passwordEncoder().encode("employee")).roles("EMPLOYEE")
-				.and()
-				.withUser("client").password(passwordEncoder().encode("client")).roles("CLIENT");
+				.jdbcAuthentication().dataSource(dataSource)
+				.usersByUsernameQuery("SELECT login, password, enabled FROM user WHERE login=?")
+				.authoritiesByUsernameQuery("SELECT login, role FROM role WHERE login=?");
 	}
 
 	@Override
