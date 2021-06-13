@@ -8,4 +8,5 @@ import com.example.travelagency.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	boolean existsByLogin(String login);
+	User findByLogin(String login);
 }

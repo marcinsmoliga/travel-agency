@@ -10,7 +10,7 @@ public interface TourService {
 	void saveOrUpdate(Tour tour);
 	void delete(Long id);
 	Tour getByIdWithComments(Long id);
-	void addUserToTour(Long tourId, Long userId);
+	void addUserToTour(Long tourId, String login);
 	List<Tour> getAllForNextMonth();
 
 }

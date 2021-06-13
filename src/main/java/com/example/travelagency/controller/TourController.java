@@ -1,5 +1,6 @@
 package com.example.travelagency.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -63,9 +64,9 @@ public class TourController {
 		return "redirect:/showOffer";
 	}
 
-	@GetMapping("/addUserToTour/{tourId}/{userId}")
-	public String addUserToTour(@PathVariable Long tourId, @PathVariable Long userId) {
-		tourService.addUserToTour(tourId, userId);
+	@GetMapping("/addUserToTour/{tourId}")
+	public String addUserToTour(@PathVariable Long tourId, Principal principal) {
+		tourService.addUserToTour(tourId, principal.getName());
 		return "redirect:/showOffer";
 	}
 
