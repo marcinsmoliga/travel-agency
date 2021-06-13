@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/", "/login")
 					.permitAll()
+				.antMatchers("/addTour")
+					.hasAnyRole("ADMIN", "EMPLOYEE")
 				.and()
 					.formLogin()
 					.loginPage("/login")
@@ -46,7 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 					.logoutSuccessUrl("/")
 					.invalidateHttpSession(true)
-					.permitAll();
+					.permitAll()
+				.and()
+					.exceptionHandling().accessDeniedPage("/forbidden");
 
 	}
 }
