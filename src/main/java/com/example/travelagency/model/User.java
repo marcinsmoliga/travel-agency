@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class User {
@@ -22,6 +23,9 @@ public class User {
 
 	@Column(length = 68)
 	private String password;
+
+	@Transient
+	private String confirmedPassword;
 
 	private boolean enabled;
 
@@ -55,6 +59,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getConfirmedPassword() {
+		return confirmedPassword;
+	}
+
+	public void setConfirmedPassword(String confirmedPassword) {
+		this.confirmedPassword = confirmedPassword;
 	}
 
 	public boolean isEnabled() {
