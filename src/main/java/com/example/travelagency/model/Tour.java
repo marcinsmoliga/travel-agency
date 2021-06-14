@@ -24,6 +24,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Tour {
 	public enum Continent {
@@ -58,9 +60,11 @@ public class Tour {
 	@JoinColumn(name = "tour_details_id")
 	private TourDetails tourDetails;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(joinColumns = @JoinColumn(name = "tour_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -149,4 +153,5 @@ public class Tour {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
 }

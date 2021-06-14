@@ -60,6 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.permitAll()
 				.and()
 					.exceptionHandling().accessDeniedPage("/forbidden");
-
+		http.csrf().disable();
 	}
 }
