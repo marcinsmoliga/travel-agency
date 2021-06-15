@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.travelagency.error.TourErrorResponse;
+import com.example.travelagency.error.TourNotFoundException;
 import com.example.travelagency.model.Tour;
 import com.example.travelagency.service.TourService;
 
@@ -67,7 +70,8 @@ public class TourRestController {
 
 	@PutMapping("/tours")
 	public ResponseEntity<Void> editTour(@RequestBody Tour tour) {
-		tourService.saveOrUpdate(tour);
+		Tour foundTour = tourService.getById(tour.getId());
+		tourService.saveOrUpdate(foundTour);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Method", "editTour");
@@ -80,7 +84,9 @@ public class TourRestController {
 
 	@DeleteMapping("/tours/{id}")
 	public ResponseEntity<Void> deleteTour(@PathVariable Long id) {
-		tourService.delete(id);
+		Tour tour = tourService.getById(id);
+
+		tourService.delete(tour.getId());
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Method", "deleteTour");
@@ -89,5 +95,15 @@ public class TourRestController {
 				.status(HttpStatus.OK)
 				.headers(httpHeaders)
 				.body(null);
+	}
+
+	@ExceptionHandler
+	public ResponseEntity<TourErrorResponse> handleException(TourNotFoundException exception) {
+		TourErrorResponse tourErrorResponse = new TourErrorResponse();
+		tourErrorResponse.setIdStatus(HttpStatus.NOT_FOUND.value());
+		tourErrorResponse.setMessage(exception.getMessage());
+		tourErrorResponse.setTimestamp(System.currentTimeMillis());
+
+		return new ResponseEntity<TourErrorResponse>(tourErrorResponse, HttpStatus.NOT_FOUND);
 	}
 }

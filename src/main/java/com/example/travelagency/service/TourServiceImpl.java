@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.travelagency.error.TourNotFoundException;
 import com.example.travelagency.model.Tour;
 import com.example.travelagency.model.TourDetails;
 import com.example.travelagency.model.User;
@@ -33,7 +34,7 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public Tour getById(Long id) {
-		return tourRepository.getById(id);
+		return tourRepository.findById(id).orElseThrow(() -> new TourNotFoundException("Tour id " + id + " not found"));
 	}
 
 	@Override

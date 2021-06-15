@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.example.travelagency.model.Tour;
 
 @Repository
-public interface TourRepository extends JpaRepository<Tour,Long> {
+public interface TourRepository extends JpaRepository<Tour, Long> {
 
 	@Query("from Tour t left join fetch t.comments where t.id = :id")
 	Tour getByIdWithComments(@Param("id") Long id);
