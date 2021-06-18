@@ -17,6 +17,7 @@
         <java.version>11</java.version>
         <maven.source.compiler>11</maven.source.compiler>
         <maven.source.target>11</maven.source.target>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -54,7 +55,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version>
+        </dependency>
     </dependencies>
 
     <build>

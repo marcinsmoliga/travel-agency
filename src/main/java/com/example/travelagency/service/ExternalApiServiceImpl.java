@@ -2,6 +2,7 @@ package com.example.travelagency.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -9,13 +10,14 @@ import org.springframework.web.client.RestTemplate;
 import com.example.travelagency.externalapi.model.myip.MyIP;
 import com.example.travelagency.externalapi.model.openweathermap.OpenWeatherMap;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class ExternalAPIsServiceImpl implements ExternalAPIsService {
-	private static final String OPENWEATHERMAP_API_KEY = "de3c11d358587955b361f56063073eb0";
+public class ExternalApiServiceImpl implements ExternalApiService {
+	private static final String OPENWEATHERMAP_API_KEY = "0fd3d46bc2476b3814027665ed11be9e";
 	private static final String OPENWEATHERMAP_ADDRESS = "http://api.openweathermap.org/data/2.5/";
-	private static final String IPAPI_ADDRESS = "https://ipapi.co/";
+	private static final String IPAPI_ADDRESS = "http://www.geoplugin.net/json.gp?ip=";
 	private static final String MYIP_ADDRESS = "https://api.myip.com";
 	private static final String LOCALHOST_IP_V4 = "127.0.0.1";
 	private static final String LOCALHOST_IP_V6 = "0:0:0:0:0:0:0:1";
@@ -25,8 +27,7 @@ public class ExternalAPIsServiceImpl implements ExternalAPIsService {
 	public OpenWeatherMap getData(HttpServletRequest request) {
 		String ip = getIpAddress(request);
 		String city = getCity(ip);
-		OpenWeatherMap openWeatherMap = getWeatherForCity(city);
-		return openWeatherMap;
+		return getWeatherForCity(city);
 	}
 
 	private String getIpAddress(HttpServletRequest request) {
@@ -50,8 +51,9 @@ public class ExternalAPIsServiceImpl implements ExternalAPIsService {
 
 	private String getCity(String ip) {
 		RestTemplate restTemplate = new RestTemplate();
-		String city = restTemplate.getForObject(IPAPI_ADDRESS + ip + "/city", String.class);
-		return city;
+		String response = restTemplate.getForObject(IPAPI_ADDRESS + ip, String.class);
+		JSONObject jsonObject = new JSONObject(response);
+		return jsonObject.getString("geoplugin_city");
 	}
 
 	private OpenWeatherMap getWeatherForCity(String city) {
@@ -65,6 +67,7 @@ public class ExternalAPIsServiceImpl implements ExternalAPIsService {
 		try {
 			String response = restTemplate.getForObject(url.toString(), String.class);
 			ObjectMapper mapper = new ObjectMapper();
+			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
 			openWeatherMap = mapper.readValue(response, OpenWeatherMap.class);
 		} catch (JsonProcessingException | HttpClientErrorException e) {

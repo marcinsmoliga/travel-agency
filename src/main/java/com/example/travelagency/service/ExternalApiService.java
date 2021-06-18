@@ -4,6 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.example.travelagency.externalapi.model.openweathermap.OpenWeatherMap;
 
-public interface ExternalAPIsService {
+public interface ExternalApiService {
 	public OpenWeatherMap getData(HttpServletRequest request);
 }
