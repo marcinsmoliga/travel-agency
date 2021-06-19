@@ -46,6 +46,7 @@
     <div class="form-group">
         <a th:href="@{/showOffer}" class="btn btn-warning">Back</a>
         <a sec:authorize="hasRole('EMPLOYEE')" th:href="@{/editTourDetails/} + ${tour.id}" class="btn btn-success float-right">Edit details</a>
+        <a sec:authorize="hasRole('CLIENT')" th:href="@{/addComment}" class="btn btn-primary">Add comment</a>
     </div>
 
 
