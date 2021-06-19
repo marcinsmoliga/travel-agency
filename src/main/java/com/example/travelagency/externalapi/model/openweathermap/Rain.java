@@ -2,6 +2,11 @@ package com.example.travelagency.externalapi.model.openweathermap;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class Rain {
 	@JsonAlias("1h")
 	private double oneH;
@@ -9,27 +14,4 @@ public class Rain {
 	@JsonAlias("3h")
 	private double threeH;
 
-	public double getOneH() {
-		return oneH;
-	}
-
-	public void setOneH(double oneH) {
-		this.oneH = oneH;
-	}
-
-	public double getThreeH() {
-		return threeH;
-	}
-
-	public void setThreeH(double threeH) {
-		this.threeH = threeH;
-	}
-
-	@Override
-	public String toString() {
-		return "Rain{" +
-				"oneH=" + oneH +
-				", threeH=" + threeH +
-				'}';
-	}
 }

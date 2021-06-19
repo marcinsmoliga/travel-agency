@@ -26,6 +26,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 public class Tour {
 	public enum Continent {
@@ -69,89 +74,5 @@ public class Tour {
 	@JoinTable(joinColumns = @JoinColumn(name = "tour_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> users;
-
-	public Tour() {
-		setTourDetails(new TourDetails());
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public Continent getContinent() {
-		return continent;
-	}
-
-	public void setContinent(Continent continent) {
-		this.continent = continent;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public boolean isAllInclusive() {
-		return allInclusive;
-	}
-
-	public void setAllInclusive(boolean allInclusive) {
-		this.allInclusive = allInclusive;
-	}
-
-	public TourDetails getTourDetails() {
-		return tourDetails;
-	}
-
-	public void setTourDetails(TourDetails tourDetails) {
-		this.tourDetails = tourDetails;
-	}
-
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
 
 }

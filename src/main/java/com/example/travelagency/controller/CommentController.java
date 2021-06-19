@@ -34,6 +34,6 @@ public class CommentController {
 	@PostMapping("/processFormComment")
 	public String addCommentData(@ModelAttribute Comment comment) {
 		commentService.save(comment);
-		return "home";
+		return "redirect:/";
 	}
 }
