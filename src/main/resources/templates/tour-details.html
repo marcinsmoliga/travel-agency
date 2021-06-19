@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Tour Details Page</title>
@@ -42,9 +43,12 @@
     </div>
 
 
-    <div>
+    <div class="form-group">
         <a th:href="@{/showOffer}" class="btn btn-warning">Back</a>
+        <a sec:authorize="hasRole('EMPLOYEE')" th:href="@{/editTourDetails/} + ${tour.id}" class="btn btn-success float-right">Edit details</a>
     </div>
+
+
 </div>
 </body>
 </html>
